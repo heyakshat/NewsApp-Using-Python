@@ -1,0 +1,84 @@
+#Install the NewsAPI library by running the following command in your command prompt/terminal
+
+pip install newsapi-python
+
+#Import the library and initialize it with your API key
+
+from newsapi import NewsApiClient
+api_key = 'YOUR_API_KEY_HERE'
+newsapi = NewsApiClient(api_key)
+
+#Use the get_top_headlines() method to fetch the top headlines
+
+top_headlines = newsapi.get_top_headlines(language='en')
+articles = top_headlines['articles']
+
+for article in articles:
+    print(article['title'])
+    print(article['description'])
+    print(article['url'])
+    print('\n')
+    
+# You can also use various filters to fetch specific news articles
+# Fetch news about technology
+
+tech_news = newsapi.get_everything(q='technology', language='en')
+articles = tech_news['articles']
+
+for article in articles:
+    print(article['title'])
+    print(article['description'])
+    print(article['url'])
+    print('\n')
+ --------------------------------------------------------------------------------------------------------------------
+                                     If you want to use GUI Framework 
+ --------------------------------------------------------------------------------------------------------------------
+ #create a graphical user interface for your app
+ import tkinter as tk
+
+def show_top_headlines():
+    top_headlines = newsapi.get_top_headlines(language='en')
+    articles = top_headlines['articles']
+
+    for article in articles:
+        article_title = article['title']
+        article_description = article['description']
+        article_url = article['url']
+        
+        tk.Label(news_frame, text=article_title, font=('Arial', 14)).pack()
+        tk.Label(news_frame, text=article_description, font=('Arial', 10)).pack()
+        tk.Label(news_frame, text=article_url, font=('Arial', 8)).pack()
+        tk.Label(news_frame, text='-'*50).pack()
+    
+def show_tech_news():
+    tech_news = newsapi.get_everything(q='technology', language='en')
+    articles = tech_news['articles']
+
+    for article in articles:
+        article_title = article['title']
+        article_description = article['description']
+        article_url = article['url']
+        
+        tk.Label(news_frame, text=article_title, font=('Arial', 14)).pack()
+        tk.Label(news_frame, text=article_description, font=('Arial', 10)).pack()
+        tk.Label(news_frame, text=article_url, font=('Arial', 8)).pack()
+        tk.Label(news_frame, text='-'*50).pack()
+
+root = tk.Tk()
+root.title('News App')
+root.geometry('600x500')
+
+top_headlines_button = tk.Button(root, text='Top Headlines', command=show_top_headlines)
+top_headlines_button.pack(pady=10)
+
+tech_news_button = tk.Button(root, text='Tech News', command=show_tech_news)
+tech_news_button.pack(pady=10)
+
+news_frame = tk.Frame(root)
+news_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
+
+root.mainloop()
+
+ 
+
+
